@@ -1,0 +1,271 @@
+﻿@using ECartApp.Controllers
+@model ViewModel2
+@{
+    ViewData["Title"] = "Index";
+    IEnumerable<ECartApp.Models.Category> Category = Model.Category;
+}
+
+<h2>Items</h2>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Index" asp-controller="Items" method="get">
+            <div class="d-inline-flex align-items-center">
+                    <span>Show:</span>
+                    <select name="pageSize" class="form-select" id="selectItem" value="@Model.pageSize">
+                        <option class="text-bg-info" value=@Model.pageSize>@Model.pageSize</option>
+                        <option value=5>5</option>
+                        <option value=10>10</option>
+                        <option value=20>20</option>
+                        <option value=30>30</option>
+                    </select>
+                    <span>Items</span> 
+                </div>
+        </form>
+    </div>
+
+    <div class="d-flex align-items-center justify-content-end mb-1 col-md-8">
+
+        <form asp-action="Index" asp-controller="Items" method="get">
+            <div class="d-inline-flex align-items-center">
+            <input type="hidden" id="searchString" value="@Model.currentFilter" />
+            <input type="hidden" id="pageSize" value=@Model.pageSize />
+            <span>Sort By:&nbsp;</span>
+            <select name="sortOrder" class="me-3" id="sortItem" value="@Model.currentSortOrder">
+                    <option class="text-bg-light" value=@Model.currentSortOrder>@Model.currentSortOrder</option>
+                    <option value="price">Price <strong>low to high</strong></option>
+                    <option value="price_desc">Price <strong>high to low</strong></option>
+            </select>
+
+        </div>
+        </form>
+        <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modalBody">
+            Add
+        </button>
+        <p class="ms-3">
+            <form asp-action="Index" asp-controller="Items" method="get">
+                    <input type="hidden" name="pageSize" value="@Model.pageSize" />
+                <input type="text" id="searchString" name="searchString"  value="@Model.currentFilter"/>
+                <button type="submit" class="ps-2 pe-2"><i class="bi bi-search"></i></button>
+            </form>
+        </p>
+
+        <!-- Modal -->
+        <div class="modal fade" id="modalBody" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header bg-success bg-opacity-25">
+                        <h5 class="modal-title text-white" id="exampleModalLabel">Add Item</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+
+                    <form id="myForm" asp-action="Index" asp-controller="Items" method="post">
+                            <div class="modal-body row-g-2">
+
+                                <div class="col-md-8">
+                                    <label for="ItemName" class="form-label">Item Name</label>
+                                    <input type="text" class="form-control" name="ItemName">
+                                </div>
+                                <div class="col-md-8  mt-2">
+                                    <label for="CategoryId" class="form-label">Category</label>
+                                    <select name="CategoryId" id="CategoryId" class = "form-select">
+                                        <option>Select Category</option>
+                                    @foreach (var item in Category)
+                                    {
+                                        <option value=@item.CategoryId>@item.CategoryName</option>
+                                    }
+                                    </select>
+                                    <div class="col-md-8  mt-2">
+                                        <label for="SubCategoryId" class="form-label">Sub Category</label>
+                                        <select name="SubCategoryId" id="SubCategoryId" class = "form-select">
+                                            <option>Select SubCategory</option>
+                                        </select>
+                                    </div>
+                                    <div class="col-md-8">
+                                        <label for="Price" class="form-label">Price</label>
+                                        <input type="Number" class="form-control" name="Price">
+                                    </div>
+                                    <div class="col-md-8">
+                                        <label for="ImageUrl" class="form-label">ImageUrl</label>
+                                        <input type="url" class="form-control" name="ImageUrl">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="modal-footer bg-success bg-opacity-25">
+                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                <button type="submit" class="btn btn-success">Save</button>
+                            </div>
+                    </form>
+
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
+<div class="row">
+    @foreach(var item in Model.Items)
+    {
+            <div class="col-md-3 m-3">
+            <div class="card" style="width: 18rem;">
+              <img src="@item.ImageUrl" class="card-img-top" alt="@item.ItemName" height="400" width="300">
+              <div class="card-body">
+                <h5 class="card-title">@item.ItemName</h5>
+                <p class="card-text">
+                    <strong>Category:</strong>@item.SubCategory.Category.CategoryName <br/>
+                    <strong>SubCategory:</strong>@item.SubCategory.SubCategoryName <br />
+                    <strong>Price:</strong>@item.Price<span>.00</span> <br />
+                </p>
+                <a href="#" class="btn btn-primary">+</a>
+              </div>
+        </div>
+        </div>
+    }
+</div>
+<hr />
+<!--pageNo button-->
+<div class="container text-center">
+    Page No.
+    @for (int i = 1; i <= Model.totalPage; i++)
+    {
+        string name = i.ToString();
+                        <a asp-action="Index" asp-controller="Items" asp-route-pageNo=@i asp-route-pageSize=@Model.pageSize asp-route-searchString="@Model.currentFilter" asp-route-sortOrder="@Model.currentSortOrder" class="btn bg-dark border-1 bg-opacity-25 ms-1">@name</a>
+    }
+</div>
+
+<input type="hidden" id="hiddenItemId" />
+
+<input type="hidden" id="hiddenSortOrder" value="@Model.currentSortOrder" />
+
+<div class="modal fade" id="deleteModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Confirm</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                Do you really want to delete?
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                <button type="submit" data-bs-dismiss="modal" id="confirmDelete" class="btn btn-primary">Ok</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts{
+        <script>
+            $(function () {
+
+                $("#myForm").validate({
+                    rules: {
+                            ItemName: {
+                            required: true,
+                            minlength: 2
+                        },
+                        CategoryId: {
+                            required: true
+                        },
+                        SubCategoryId:{
+                            required: true
+                        },
+                        Price:{
+                            required: true,
+                            Number: true
+                        },
+                        ImageUrl:{
+                            required: true,
+                            URL: true
+                        }
+
+                    },
+                    messages: {
+                                ItemName: {
+                                required: "Please enter Item name.",
+                                minlength: "Length of Item name must be atleast of 2."
+                            },
+                            CategoryId: {
+                                required: "Please select category."
+                            },
+                            SubCategoryId:{
+                                required: "Please select subCategory."
+                            },
+                            Price:{
+                                required: "Pleasse enter item price",
+                                Number : "Price must be in number."
+
+                            },
+                            ImageUrl:{
+                                required: "Please enter Image Url.",
+                                URL:"Please enter valid image Url."
+                            }
+                    }
+                });
+            });
+                    function Delete(Items) {
+                        $("#hiddenItemId").val(Items);
+                        $("#deleteModal").modal("show");
+            }
+            $("#confirmDelete").click(() => {
+                        var id = $("#hiddenItemId").val();
+                $.ajax({
+                    type: 'POST',
+                    url: '@Url.Action("Delete","Items")',
+                        data: { ItemId: id },
+                    success: function (response) {
+                        $("#row_" + id).remove();
+                        $("#deleteModal").modal("hide");
+                    }
+                });
+            });
+
+            //pageSize dropdown
+            $("#selectItem").change(() => {
+                $.ajax({
+                    type: 'GET',
+                        url: '/Items/Index',
+                    data: { pageSize: $("#selectItem").val(), searchString: $("#searchString").val(), sortOrder: $("#hiddenSortOrder").val() },
+                    success: function (response) {
+                        $("body").html(response);
+                    }
+                });
+            });
+
+            //SortBy dropdown
+                $("#sortItem").change(() => {
+                    var filter = $("#searchString").val();
+                $.ajax({
+                    type: 'GET',
+                        url: '/Items/Index',
+                            data: { pageSize: $("#pageSize").val(), searchString: filter, sortOrder: $("#sortItem").val() },
+                    success: function (response) {
+                        $("body").html(response);
+                    }
+                });
+            });
+
+            //dependent dropdown for SubCategoryLsit
+            $('#CategoryId').change(()=>{
+                    $('#SubCategoryId').html("");
+                    var id = $('#CategoryId').val();
+                    $.ajax({
+                        type: 'GET',
+                        url: '/Items/GetJson',
+                        data: { CategoryId: id},
+                        success: function (response) {e
+                                const subCategoryList = $('#SubCategoryId')
+                                    for(let i=0;i<response.length;i++){
+                                               console.log(response[i]["subCategoryId"]);
+                                               const opt = $("<option></option>");
+                                                       opt.attr("value",response[i]["subCategoryId"]);
+                                                   opt.text(response[i]["subCategoryName"]);
+                                                   subCategoryList.append(opt);
+                                    }
+                                
+                        }
+                    });
+            });
+        </script>
+}

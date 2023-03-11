@@ -1,0 +1,206 @@
+﻿@using ECartApp.Controllers
+@model ViewModel1
+@{
+    ViewData["Title"] = "Index";
+    IEnumerable<ECartApp.Models.Category> Category = Model.Category;
+}
+
+<h2>SubCatgegory</h2>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Index" asp-controller="SubCatgegory" method="get">
+            <div class="d-inline-flex align-items-center">
+                    <span>Show:</span>
+                    <select name="pageSize" class="form-select" id="selectItem" value="@Model.pageSize">
+                        <option class="text-bg-info" value=@Model.pageSize>@Model.pageSize</option>
+                        <option value=5>5</option>
+                        <option value=10>10</option>
+                        <option value=20>20</option>
+                        <option value=30>30</option>
+                    </select>
+                    <span>Entries</span> 
+                </div>
+        </form>
+    </div>
+
+    <div class="d-flex align-items-center justify-content-end mb-1 col-md-8">
+        <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modalBody">
+            Add
+        </button>
+        <p class="ms-3">
+            <form asp-action="Index" asp-controller="SubCatgegory" method="get">
+                    <input type="hidden" name="pageSize" value="@Model.pageSize" />
+                <input type="text" id="searchString" name="searchString"  value="@Model.currentFilter"/>
+                <button type="submit" class="ps-2 pe-2"><i class="bi bi-search"></i></button>
+            </form>
+        </p>
+
+        <!-- Modal -->
+        <div class="modal fade" id="modalBody" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header bg-success bg-opacity-25">
+                        <h5 class="modal-title text-white" id="exampleModalLabel">Add SubCatgegory</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+
+                    <form id="myForm" asp-action="Index" asp-controller="SubCategory" method="post">
+                            <div class="modal-body row-g-2">
+
+                                <div class="col-md-8">
+                                    <label for="SubCategoryName" class="form-label">SubCatgegory Name</label>
+                                    <input type="text" class="form-control" name="SubCategoryName">
+                                </div>
+                                <div class="col-md-8  mt-2">
+                                    <label for="CategoryId" class="form-label">Category</label>
+                                    <select name="CategoryId" id="CategoryId" class = "form-select">
+                                        <option>Select Category</option>
+                                    @foreach (var item in Category)
+                                    {
+                                                <option value=@item.CategoryId>@item.CategoryName</option>
+                                    }
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="modal-footer bg-success bg-opacity-25">
+                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                <button type="submit" class="btn btn-success">Save</button>
+                            </div>
+                    </form>
+
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
+<table class="table table-striped">
+    <tr>
+        <th>
+            <a asp-action="Index" asp-controller="SubCategory" asp-route-sortOrder="@Model.nameSortParm" asp-route-searchString="@Model.currentFilter" class="text-decoration-none text-black">SubCatgegory Name↕</a>
+        </th>
+        <th>
+            <a asp-action="Index" asp-controller="SubCategory" asp-route-sortOrder="@Model.categorySortParm" asp-route-searchString="@Model.currentFilter" class="text-decoration-none text-black">Category↕</a>
+        </th>
+        <th>
+            <a asp-action="Index" asp-controller="SubCategory" asp-route-sortOrder="@Model.createDateSortParm" asp-route-searchString="@Model.currentFilter" class="text-decoration-none text-black">CreatedOn↕</a>
+        </th>
+        <th>
+            UpdatedOn
+        </th>
+
+        <th></th>
+    </tr>
+
+    @foreach (var item in Model.SubCategory)
+    {
+                               <tr id="row_@item.SubCategoryId">
+                                <td>
+                    @item.SubCategoryName
+                                </td>
+                                <td>
+                    @item.Category.CategoryName
+                                </td>
+                                <td>
+                    @item.CreatedOn
+                                </td>
+                                <td>
+                    @item.UpdatedOn
+                                </td>
+                                <td>
+                                        <a asp-action="Edit" asp-controller="SubCategory" asp-route-SubCategoryId=@item.SubCategoryId class = "btn btn-warning">Edit</a>
+                                        <a class="btn btn-danger" onclick="Delete(@item.SubCategoryId)">Delete</a>
+                                </td>
+                            </tr>
+        
+    }
+</table>
+<hr />
+<!--pageNo button-->
+<div class="container text-center">
+    Page No.
+    @for (int i = 1; i <= Model.totalPage; i++)
+    {
+        string name = i.ToString();
+                    <a asp-action="Index" asp-controller="SubCategory" asp-route-pageNo=@i asp-route-pageSize=@Model.pageSize asp-route-searchString="@Model.currentFilter" asp-route-sortOrder="@Model.currentSortOrder" class="btn bg-dark border-1 bg-opacity-25 ms-1">@name</a>
+    }
+</div>
+
+<input type="hidden" id="hiddenSubCategoryId" />
+
+<input type="hidden" id="hiddenSortOrder" value="@Model.currentSortOrder" />
+
+<div class="modal fade" id="deleteModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Confirm</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                Do you really want to delete?
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                <button type="submit" data-bs-dismiss="modal" id="confirmDelete" class="btn btn-primary">Ok</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts{
+    <script>
+        $(function () {
+
+            $("#myForm").validate({
+                rules: {
+                    SubCategoryName: {
+                        required: true,
+                        minlength: 2
+                    },
+                    CategoryId: {
+                        required: true
+                    }
+                },
+                messages: {
+                        SubCategoryName: {
+                        required: "Please enter SubCategory Name.",
+                        minlength: "Category must be at least 2 characters."
+                    },
+                    CategoryId: {
+                        required: "Please select a categtory."
+                    }
+                }
+            });
+        });
+        function Delete(SubCategoryId) {
+                    $("#hiddenSubCategoryId").val(SubCategoryId);
+            $("#deleteModal").modal("show");
+        }
+        $("#confirmDelete").click(() => {
+                var id = $("#hiddenSubCategoryId").val();
+            $.ajax({
+                type: 'POST',
+                url: '@Url.Action("Delete","SubCategory")',
+                    data: { SubCategoryId: id },
+                success: function (response) {
+                    $("#row_" + id).remove();
+                    $("#deleteModal").modal("hide");
+                }
+            });
+        });
+
+        //pageSize dropdown
+        $("#selectItem").change(() => {
+            $.ajax({
+                type: 'GET',
+                    url: '/SubCategory/Index',
+                data: { pageSize: $("#selectItem").val(), searchString: $("#searchString").val(), sortOrder: $("#hiddenSortOrder").val() },
+                success: function (response) {
+                    $("body").html(response);
+                }
+            });
+        });
+    </script>
+}
