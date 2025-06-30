@@ -1,10 +1,8 @@
-﻿using ECartApp.DAL;
-using ECartApp.Models;
+﻿using ECartApp.Data.Entity;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.Metadata.Internal;
 using System.Linq.Expressions;
 
-namespace ECartApp.Repository
+namespace ECartApp.Data.Repository
 {
     public class ItemRepository : GenericRepository<Items>, IItemRepository
     {

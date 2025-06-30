@@ -1,7 +1,7 @@
-﻿using ECartApp.Models;
+﻿using ECartApp.Data.Entity;
 using System.Linq.Expressions;
 
-namespace ECartApp.Repository
+namespace ECartApp.Data.Repository
 {
     public interface IItemRepository : IGenericRepository<Items>
     {

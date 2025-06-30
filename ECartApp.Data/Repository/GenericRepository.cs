@@ -1,8 +1,7 @@
-﻿using ECartApp.DAL;
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.EntityFrameworkCore;
 using System.Linq.Expressions;
 
-namespace ECartApp.Repository
+namespace ECartApp.Data.Repository
 {
     public class GenericRepository<T> : IGenericRepository<T> where T : class
     {

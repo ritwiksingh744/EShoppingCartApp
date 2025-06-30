@@ -5,6 +5,8 @@ VisualStudioVersion = 17.3.32811.315
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ECartApp.Web", "ECartApp.Web\ECartApp.Web.csproj", "{B36736B0-55E9-4FEF-965D-A0D522426BA5}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ECartApp.Data", "ECartApp.Data\ECartApp.Data.csproj", "{EFD43718-3FA5-4514-8201-61BD6843E600}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -15,6 +17,10 @@ Global
 		{B36736B0-55E9-4FEF-965D-A0D522426BA5}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{B36736B0-55E9-4FEF-965D-A0D522426BA5}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{B36736B0-55E9-4FEF-965D-A0D522426BA5}.Release|Any CPU.Build.0 = Release|Any CPU
+		{EFD43718-3FA5-4514-8201-61BD6843E600}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{EFD43718-3FA5-4514-8201-61BD6843E600}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{EFD43718-3FA5-4514-8201-61BD6843E600}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{EFD43718-3FA5-4514-8201-61BD6843E600}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 #nullable disable
 
-namespace ECartApp.Migrations
+namespace ECartApp.Data_.Migrations
 {
     public partial class _init : Migration
     {

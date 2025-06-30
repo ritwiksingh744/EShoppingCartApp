@@ -1,6 +1,6 @@
 ﻿using System.Linq.Expressions;
 
-namespace ECartApp.Repository
+namespace ECartApp.Data.Repository
 {
     public interface IGenericRepository<T> where T : class
     {

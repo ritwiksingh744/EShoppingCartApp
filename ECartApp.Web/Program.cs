@@ -1,6 +1,6 @@
-using ECartApp.DAL;
-using ECartApp.Models;
-using ECartApp.Repository;
+using ECartApp.Data;
+using ECartApp.Data.Entity;
+using ECartApp.Data.Repository;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 

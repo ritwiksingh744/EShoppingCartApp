@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace ECartApp.Models
+namespace ECartApp.Data.Entity
 {
     public class Items
     {

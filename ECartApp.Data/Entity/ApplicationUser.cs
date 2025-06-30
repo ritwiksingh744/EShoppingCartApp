@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Identity;
 using System;
 
-namespace ECartApp.Models
+namespace ECartApp.Data.Entity
 {
     public class ApplicationUser : IdentityUser
     {

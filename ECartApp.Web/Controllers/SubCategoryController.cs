@@ -1,9 +1,6 @@
-﻿using ECartApp.Models;
-using ECartApp.Repository;
+﻿using ECartApp.Data.Entity;
+using ECartApp.Data.Repository;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.RazorPages;
-using Microsoft.Data.SqlClient;
-using System.Drawing.Printing;
 
 namespace ECartApp.Controllers
 {

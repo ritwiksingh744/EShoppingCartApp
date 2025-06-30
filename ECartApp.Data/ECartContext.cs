@@ -1,8 +1,8 @@
-﻿using ECartApp.Models;
+﻿using ECartApp.Data.Entity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 
-namespace ECartApp.DAL
+namespace ECartApp.Data
 {
     public class ECartContext : IdentityDbContext<ApplicationUser>
     {
