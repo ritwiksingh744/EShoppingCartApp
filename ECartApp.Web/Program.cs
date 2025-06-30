@@ -18,9 +18,7 @@ namespace ECartApp
 
             // Add services to the container.
             builder.Services.AddMvc();
-            builder.Services.AddScoped<IGenericRepository<Category>, GenericRepository<Category>>();
-            builder.Services.AddScoped<IGenericRepository<SubCategory>, GenericRepository<SubCategory>>();
-            builder.Services.AddScoped<IGenericRepository<Items>, GenericRepository<Items>>();
+            builder.Services.AddScoped(typeof(IGenericRepository<>), typeof(GenericRepository<>));
             builder.Services.AddScoped<IItemRepository, ItemRepository>();
 
             var app = builder.Build();

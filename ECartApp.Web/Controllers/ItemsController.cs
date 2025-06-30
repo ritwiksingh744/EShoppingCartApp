@@ -1,6 +1,8 @@
 ﻿using ECartApp.Data.Entity;
 using ECartApp.Data.Repository;
+using ECartApp.Models.Item;
 using Microsoft.AspNetCore.Mvc;
+using System.Net;
 
 namespace ECartApp.Controllers
 {
@@ -85,14 +87,29 @@ namespace ECartApp.Controllers
         }
 
         [HttpPost]
-        public IActionResult Index(Items model)
+        public IActionResult Index(ItemAddModel model)
         {
-            if (model.ItemName != null)
+            if (ModelState.IsValid)
             {
-                _itemsRepository.Insert(model);
-                _itemsRepository.Save();
-            }
+                if (model.ItemName != null)
+                {
+                    var request = new Items();
+                    request.ItemName = model.ItemName;
+                    request.Price = model.Price;
+                    request.ImageUrl = model.ImageUrl;
+                    request.CategoryId = model.CategoryId;
+                    request.SubCategoryId = model.SubCategoryId;
+                    request.CreatedOn = DateTime.Now;
+                    
+                    _itemsRepository.Insert(request);
+                    _itemsRepository.Save();
+                }
             return RedirectToAction("Index");
+            }
+            var message = string.Join(" | ", ModelState.Values
+        .SelectMany(v => v.Errors)
+        .Select(e => e.ErrorMessage));
+            throw new Exception($"Status Code: {HttpStatusCode.BadRequest}, Message: {message}");
         }
 
         [HttpGet]

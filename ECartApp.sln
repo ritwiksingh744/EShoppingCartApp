@@ -7,6 +7,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ECartApp.Web", "ECartApp.We
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ECartApp.Data", "ECartApp.Data\ECartApp.Data.csproj", "{EFD43718-3FA5-4514-8201-61BD6843E600}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ECartApp.Models", "ECartApp.Models\ECartApp.Models.csproj", "{8D01FB8E-05AA-43CA-A382-16EA1BF2C63F}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -21,6 +23,10 @@ Global
 		{EFD43718-3FA5-4514-8201-61BD6843E600}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{EFD43718-3FA5-4514-8201-61BD6843E600}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{EFD43718-3FA5-4514-8201-61BD6843E600}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8D01FB8E-05AA-43CA-A382-16EA1BF2C63F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8D01FB8E-05AA-43CA-A382-16EA1BF2C63F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8D01FB8E-05AA-43CA-A382-16EA1BF2C63F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8D01FB8E-05AA-43CA-A382-16EA1BF2C63F}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

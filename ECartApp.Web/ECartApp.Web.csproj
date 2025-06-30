@@ -23,6 +23,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\ECartApp.Data\ECartApp.Data.csproj" />
+    <ProjectReference Include="..\ECartApp.Models\ECartApp.Models.csproj" />
   </ItemGroup>
 
 </Project>

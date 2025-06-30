@@ -69,7 +69,7 @@
                                 <div class="col-md-8  mt-2">
                                     <label for="CategoryId" class="form-label">Category</label>
                                     <select name="CategoryId" id="CategoryId" class = "form-select">
-                                        <option>Select Category</option>
+                                        <option value="">Select Category</option>
                                     @foreach (var item in Category)
                                     {
                                         <option value=@item.CategoryId>@item.CategoryName</option>
@@ -78,7 +78,7 @@
                                     <div class="col-md-8  mt-2">
                                         <label for="SubCategoryId" class="form-label">Sub Category</label>
                                         <select name="SubCategoryId" id="SubCategoryId" class = "form-select">
-                                            <option>Select SubCategory</option>
+                                            <option value="">Select SubCategory</option>
                                         </select>
                                     </div>
                                     <div class="col-md-8">
@@ -250,19 +250,24 @@
             $('#CategoryId').change(()=>{
                     $('#SubCategoryId').html("");
                     var id = $('#CategoryId').val();
+                    debugger
                     $.ajax({
                         type: 'GET',
                         url: '/Items/GetJson',
                         data: { CategoryId: id},
-                        success: function (response) {e
-                                const subCategoryList = $('#SubCategoryId')
-                                    for(let i=0;i<response.length;i++){
-                                               console.log(response[i]["subCategoryId"]);
-                                               const opt = $("<option></option>");
-                                                       opt.attr("value",response[i]["subCategoryId"]);
-                                                   opt.text(response[i]["subCategoryName"]);
-                                                   subCategoryList.append(opt);
-                                    }
+                        success: function (response) {
+                                const subCategoryList = $('#SubCategoryId');
+                                const opt1 = $("<option></option>");
+                                opt1.attr("value","");
+                                opt1.text("Select SubCategory");
+                                subCategoryList.append(opt1);
+                                for(let i=0;i<response.length;i++){
+                                            console.log(response[i]["subCategoryId"]);
+                                            const opt = $("<option></option>");
+                                                    opt.attr("value",response[i]["subCategoryId"]);
+                                                opt.text(response[i]["subCategoryName"]);
+                                                subCategoryList.append(opt);
+                                }
                                 
                         }
                     });
